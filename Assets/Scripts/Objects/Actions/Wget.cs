@@ -8,9 +8,11 @@ public class Wget : ActionBase
 	{
 		name = "wget";
 		aliases = new string[] { "wget" };
+		response = "SERVER moved to CLIENT.";
 	}
 	public override Values Execute(Values input, ref FirewallBase firewall)
 	{
-		return new Values(input.CLIENT + input.SERVER / 2, input.SERVER / 2);
+		int? num = input.CLIENT + input.SERVER / 2;
+		return new Values(num > 15 ? 15 : num, input.SERVER / 2);
 	}
 }

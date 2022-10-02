@@ -8,9 +8,11 @@ public class Ncat : ActionBase
 	{
 		name = "ncat";
 		aliases = new string[] { "ncat", "netcat" };
+		response = "CLIENT moved to SERVER.";
 	}
 	public override Values Execute(Values input, ref FirewallBase firewall)
 	{
-		return new Values(input.CLIENT / 2, input.SERVER + input.CLIENT / 2);
+		int? num = input.SERVER + input.CLIENT / 2;
+		return new Values(input.CLIENT / 2, num > 15 ? 15 : num);
 	}
 }

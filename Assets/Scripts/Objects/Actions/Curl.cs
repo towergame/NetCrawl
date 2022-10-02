@@ -8,6 +8,7 @@ public class Curl : ActionBase
 	{
 		name = "curl";
 		aliases = new string[] { "curl" };
+		response = "SERVER transmitted to node.";
 	}
 	public override Values Execute(Values input, ref FirewallBase firewall)
 	{
