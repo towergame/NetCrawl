@@ -7,4 +7,5 @@ public abstract class FirewallBase
 	public string name;
 	public Values health;
 	public abstract void Execute(Values input);
+	public abstract string GetHealth();
 }

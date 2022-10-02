@@ -12,7 +12,7 @@ public class Curl : ActionBase
 	}
 	public override Values Execute(Values input, ref FirewallBase firewall)
 	{
-		firewall.Execute(new Values(input.SERVER, null));
+		firewall.Execute(new Values(null, input.SERVER));
 		return new Values(input.CLIENT, 0);
 	}
 }

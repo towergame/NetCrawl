@@ -15,4 +15,9 @@ public class Inviolable : FirewallBase
 	{
 		return;
 	}
+
+	public override string GetHealth()
+	{
+		return System.Convert.ToString(health.CLIENT) + ", " + System.Convert.ToString(health.SERVER);
+	}
 }

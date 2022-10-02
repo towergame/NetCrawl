@@ -15,4 +15,9 @@ public class Inbound : FirewallBase
 		if (input.CLIENT == null) return;
 		health.CLIENT -= input.CLIENT;
 	}
+
+	public override string GetHealth()
+	{
+		return System.Convert.ToString(health.CLIENT);
+	}
 }

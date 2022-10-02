@@ -15,4 +15,9 @@ public class Outbound : FirewallBase
 		if (input.SERVER == null) return;
 		health.SERVER -= input.SERVER;
 	}
+
+	public override string GetHealth()
+	{
+		return System.Convert.ToString(health.SERVER);
+	}
 }

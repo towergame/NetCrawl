@@ -16,4 +16,9 @@ public class Shared : FirewallBase
 		if (input.SERVER != null) health.CLIENT -= input.SERVER;
 		if (input.CLIENT != null) health.CLIENT -= input.CLIENT;
 	}
+
+	public override string GetHealth()
+	{
+		return System.Convert.ToString(health.CLIENT);
+	}
 }

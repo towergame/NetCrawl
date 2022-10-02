@@ -22,4 +22,9 @@ public class Contiguous : FirewallBase
 		if (input.SERVER != null && choice == "SERVER") health.CLIENT -= input.SERVER;
 		if (input.CLIENT != null && choice == "CLIENT") health.CLIENT -= input.CLIENT;
 	}
+
+	public override string GetHealth()
+	{
+		return Convert.ToString(health.CLIENT);
+	}
 }

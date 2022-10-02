@@ -213,6 +213,31 @@ MonoBehaviour:
   - Connection to internal network <<AAAAA>> successful.
   - For a command list type "?" or "help"
   - ---------------------------
+  firewallBlocks:
+    _Buckets: 0200000004000000ffffffff0100000003000000ffffffffffffffff
+    _HashCodes: 112d8878ce55c54e990abf14fabb96782511df490000000000000000
+    _Next: ffffffffffffffffffffffffffffffff000000000000000000000000
+    _Count: 5
+    _Version: 92
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - INBOUND
+    - OUTBOUND
+    - SHARED
+    - CONTIGUOUS
+    - INVIOLABLE
+    - 
+    - 
+    _Values:
+    - {fileID: 755852942021550562, guid: 1f904dc81f68f4083a8bb4bf511ffefa, type: 3}
+    - {fileID: 755852942021550562, guid: cde5cde6abeebfeb1bd2bac1093ed018, type: 3}
+    - {fileID: 755852942021550562, guid: b7fcf6d45c9c406aa891e71583c96f49, type: 3}
+    - {fileID: 755852942021550562, guid: cf1c18ad3cb047430be38c74d1dd1b18, type: 3}
+    - {fileID: 755852942021550562, guid: 90159b665ae2dc9e9828db2661420f30, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+  firewallStackUI: {fileID: 1080624160}
   terminalGO: {fileID: 353719397}
 --- !u!4 &138945606
 Transform:

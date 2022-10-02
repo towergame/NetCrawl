@@ -5,8 +5,9 @@ using System.Linq;
 using System;
 using Baracuda.Monitoring;
 using UnityEngine;
-using Unity.VisualScripting;
 using TMPro;
+
+[Serializable] public class FirewallDict : SerializableDictionary<string, GameObject> { }
 
 public class GameManager : MonoBehaviour
 {
@@ -23,18 +24,19 @@ public class GameManager : MonoBehaviour
 	public GameObject timeGo;
 	private TMP_Text timeText;
 	private float timePassed = 0f;
-	[Monitor]
-	private int? FW_CLIENT = 0;
 
-	[Monitor]
 	private string currCommand = "";
 	public List<string> initialLines = new();
 	private readonly List<string> log = new();
 
 	private readonly Dictionary<string, ActionBase> possibleActions = new();
 
-	private readonly Dictionary<string, FirewallBase> possibleLayers = new();
+	private readonly Dictionary<string, Type> possibleLayers = new();
 	// private readonly LinkedList<FirewallBase> firewallLayers = new();
+
+	public FirewallDict firewallBlocks;
+	public GameObject firewallStackUI;
+	private readonly List<GameObject> stackElements = new();
 
 	private TMP_Text terminalObj;
 	public GameObject terminalGO;
@@ -42,17 +44,45 @@ public class GameManager : MonoBehaviour
 	private NetworkManager networkManager;
 	private Node currentNode = null;
 
-	public void SelectNode(Node n)
+	public void SelectNode(Node node)
 	{
 		if (currentNode != null) currentNode.selected = false;
-		currentNode = n;
+		currentNode = node;
 		currentNode.selected = true;
+		RegenerateLayers();
+	}
+
+	public void RegenerateLayers()
+	{
+		if (currentNode == null) return;
+
+		foreach (GameObject block in stackElements)
+		{
+			Destroy(block);
+		}
+
+		stackElements.Clear();
+
+		int n = 0;
+		foreach (FirewallBase firewall in currentNode.firewallLayers)
+		{
+			if (firewallBlocks.ContainsKey(firewall.name))
+			{
+				GameObject block = Instantiate(firewallBlocks[firewall.name], new Vector2(528.5f - 200 + n * 57, 225), new Quaternion(), firewallStackUI.transform);
+				// RectTransform rt = block.GetComponent<RectTransform>();
+				// rt.position = new Vector2(-200 + n * 57, 0);
+				stackElements.Add(block);
+				n++;
+			}
+		}
 	}
 
 	public FirewallBase GenerateLayer(List<string> options)
 	{
 		int choice = UnityEngine.Random.Range(0, options.Count);
-		return possibleLayers[options[choice]];
+		Type type = possibleLayers[options[choice]];
+		FirewallBase firewall = (FirewallBase)Activator.CreateInstance(type);
+		return firewall;
 	}
 
 	List<Type> GetPossibleType<T>()
@@ -86,13 +116,12 @@ public class GameManager : MonoBehaviour
 		foreach (Type type in firewalls)
 		{
 			FirewallBase firewall = (FirewallBase)Activator.CreateInstance(type);
-			possibleLayers.Add(firewall.name, firewall);
+			possibleLayers.Add(firewall.name, type);
 		}
 
 		networkManager = gameObject.GetComponent<NetworkManager>();
 		networkManager.GenerateNetwork(3, 0.33f);
-		currentNode = networkManager.nodes.First().GetComponent<Node>();
-		currentNode.selected = true;
+		// SelectNode(networkManager.nodes.First().GetComponent<Node>());
 
 		foreach (string line in initialLines)
 		{
@@ -114,7 +143,6 @@ public class GameManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		FW_CLIENT = currentNode.firewallLayers.FirstOrDefault() != null ? currentNode.firewallLayers.FirstOrDefault().health.CLIENT : 0;
 		timePassed += Time.deltaTime;
 		if (timePassed > 10)
 		{
@@ -137,7 +165,11 @@ public class GameManager : MonoBehaviour
 					log.Add(possibleActions[currCommand].response);
 					CLIENT = newVals.CLIENT != null ? (int)newVals.CLIENT : CLIENT;
 					SERVER = newVals.SERVER != null ? (int)newVals.SERVER : SERVER;
-					if (currlayer.health.CLIENT <= 0 || currlayer.health.SERVER <= 0) currentNode.firewallLayers.RemoveAt(0);
+					if (currlayer.health.CLIENT <= 0 || currlayer.health.SERVER <= 0)
+					{
+						currentNode.firewallLayers.RemoveAt(0);
+						RegenerateLayers();
+					}
 					if (currentNode.firewallLayers.Count == 0)
 					{
 						if (currentNode.left != null) currentNode.left?.SetActive(true);
@@ -178,6 +210,22 @@ public class GameManager : MonoBehaviour
 		serverBinText.text = binary;
 
 		timeText.text = Convert.ToString((int)Mathf.Round(10 - timePassed));
+
+		if (currentNode != null)
+		{
+			// if (stackElements.Count == 0)
+			// {
+			// 	RegenerateLayers();
+			// }
+			// else
+			// {
+			for (int x = 0; x < currentNode.firewallLayers.Count; x++)
+			{
+				if (currentNode.firewallLayers[x] == null || stackElements[x] == null) break;
+				stackElements[x].GetComponent<FirewallBlock>().health = currentNode.firewallLayers[x].GetHealth();
+			}
+			// }
+		}
 	}
 
 	void Awake()
