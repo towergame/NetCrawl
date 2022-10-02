@@ -61,6 +61,8 @@ public class GameManager : MonoBehaviour
 		}
 
 		firewallLayers.AddLast(possibleLayers["SHARED"]);
+
+		gameObject.GetComponent<NetworkManager>().GenerateNetwork(3, 0.33f);
 	}
 
 	// Update is called once per frame
