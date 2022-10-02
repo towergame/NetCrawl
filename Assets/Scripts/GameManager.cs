@@ -10,11 +10,18 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-	[Monitor]
+	public GameObject clientDecGo;
+	private TMP_Text clientDecText;
+	public GameObject clientBinGo;
+	private TMP_Text clientBinText;
+	public GameObject serverDecGo;
+	private TMP_Text serverDecText;
+	public GameObject serverBinGo;
+	private TMP_Text serverBinText;
 	private int CLIENT = 0;
-	[Monitor]
 	private int SERVER = 0;
-	[Monitor]
+	public GameObject timeGo;
+	private TMP_Text timeText;
 	private float timePassed = 0f;
 	[Monitor]
 	private int? FW_CLIENT = 0;
@@ -93,6 +100,15 @@ public class GameManager : MonoBehaviour
 		}
 
 		terminalObj = terminalGO.GetComponent<TMP_Text>();
+
+		clientDecText = clientDecGo.GetComponent<TMP_Text>();
+		clientBinText = clientBinGo.GetComponent<TMP_Text>();
+		serverDecText = serverDecGo.GetComponent<TMP_Text>();
+		serverBinText = serverBinGo.GetComponent<TMP_Text>();
+		timeText = timeGo.GetComponent<TMP_Text>();
+
+		CLIENT = UnityEngine.Random.Range(0, 16);
+		SERVER = UnityEngine.Random.Range(0, 16);
 	}
 
 	// Update is called once per frame
@@ -150,6 +166,18 @@ public class GameManager : MonoBehaviour
 		}
 		terminal += "user@hostname>> " + currCommand;
 		terminalObj.text = terminal;
+
+		clientDecText.text = Convert.ToString(CLIENT);
+		string binary = Convert.ToString(CLIENT, 2);
+		if (binary.Length < 4) binary = new String('0', 4 - binary.Length) + binary;
+		clientBinText.text = binary;
+
+		serverDecText.text = Convert.ToString(SERVER);
+		binary = Convert.ToString(SERVER, 2);
+		if (binary.Length < 4) binary = new String('0', 4 - binary.Length) + binary;
+		serverBinText.text = binary;
+
+		timeText.text = Convert.ToString((int)Mathf.Round(10 - timePassed));
 	}
 
 	void Awake()

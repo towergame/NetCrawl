@@ -203,6 +203,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc47792473038f4691af77fb1048db7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clientDecGo: {fileID: 1602676784}
+  clientBinGo: {fileID: 1497084860}
+  serverDecGo: {fileID: 1313192646}
+  serverBinGo: {fileID: 1063734904}
+  timeGo: {fileID: 1213931815}
   initialLines:
   - ---------------------------
   - Connection to internal network <<AAAAA>> successful.
