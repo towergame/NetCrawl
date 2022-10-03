@@ -8,7 +8,7 @@ public class Wget : ActionBase
 	{
 		name = "wget";
 		aliases = new string[] { "wget" };
-		response = "SERVER moved to CLIENT.";
+		response = new string[] { "SERVER moved to CLIENT." };
 	}
 	public override Values Execute(Values input, ref FirewallBase firewall)
 	{

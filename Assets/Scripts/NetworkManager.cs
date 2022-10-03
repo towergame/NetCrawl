@@ -18,8 +18,8 @@ public class NetworkManager : MonoBehaviour
 		if (bounds != null)
 		{
 			RectTransform bound = bounds.GetComponent<RectTransform>();
-			topLeft = Camera.main.ScreenToWorldPoint(new Vector3(bound.position.x - bound.rect.width / 2, bound.position.y - bound.rect.height / 2, z));
-			bottomRight = Camera.main.ScreenToWorldPoint(new Vector3(bound.position.x + bound.rect.width / 2, bound.position.y + bound.rect.height / 2, z));
+			topLeft = new Vector3(bound.position.x - bound.rect.width / 2, bound.position.y - bound.rect.height / 2, z);
+			bottomRight = new Vector3(bound.position.x + bound.rect.width / 2, bound.position.y + bound.rect.height / 2, z);
 			// topLeft = new Vector2(bound.rect.xMin, bound.rect.yMax);
 			// bottomRight = new Vector2(bound.rect.xMax, bound.rect.yMin);
 		}

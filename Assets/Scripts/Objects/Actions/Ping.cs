@@ -8,7 +8,7 @@ public class Ping : ActionBase
 	{
 		name = "ping";
 		aliases = new string[] { "ping" };
-		response = "CLIENT transmitted to node.";
+		response = new string[] { "CLIENT transmitted to node." };
 	}
 	public override Values Execute(Values input, ref FirewallBase firewall)
 	{

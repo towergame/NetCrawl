@@ -11,6 +11,7 @@ public class Node : MonoBehaviour
 	public bool cracked = false;
 	public bool final = false;
 	public bool selected = false;
+	public int restrictedLayers = 0;
 
 	public GameManager gameManager;
 
@@ -33,8 +34,10 @@ public class Node : MonoBehaviour
 
 		lr.SetPosition(0, gameObject.transform.position);
 		lr.SetPosition(1, parent.transform.position);
-		lr.startWidth = 0.1f;
-		lr.endWidth = 0.1f;
+		lr.startWidth = 0.05f;
+		lr.endWidth = 0.05f;
+		lr.startColor = Color.white;
+		lr.endColor = Color.white;
 	}
 
 	public void Start()

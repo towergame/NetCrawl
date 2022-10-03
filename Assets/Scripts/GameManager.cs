@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
 	public GameObject timeGo;
 	private TMP_Text timeText;
 	private float timePassed = 0f;
+	public int restrictionCycles = 3;
+	private int currentCycles = 0;
 
 	private string currCommand = "";
 	public List<string> initialLines = new();
@@ -37,9 +39,13 @@ public class GameManager : MonoBehaviour
 	public FirewallDict firewallBlocks;
 	public GameObject firewallStackUI;
 	private readonly List<GameObject> stackElements = new();
+	private readonly List<GameObject> restrictedElements = new();
 
 	private TMP_Text terminalObj;
 	public GameObject terminalGO;
+
+	public GameObject timerProgressGO;
+	private RectTransform timerProgressRect;
 
 	private NetworkManager networkManager;
 	private Node currentNode = null;
@@ -61,19 +67,33 @@ public class GameManager : MonoBehaviour
 			Destroy(block);
 		}
 
+		foreach (GameObject block in restrictedElements)
+		{
+			Destroy(block);
+		}
+
 		stackElements.Clear();
+		restrictedElements.Clear();
 
 		int n = 0;
 		foreach (FirewallBase firewall in currentNode.firewallLayers)
 		{
 			if (firewallBlocks.ContainsKey(firewall.name))
 			{
-				GameObject block = Instantiate(firewallBlocks[firewall.name], new Vector2(528.5f - 200 + n * 57, 225), new Quaternion(), firewallStackUI.transform);
-				// RectTransform rt = block.GetComponent<RectTransform>();
-				// rt.position = new Vector2(-200 + n * 57, 0);
+				GameObject block = Instantiate(firewallBlocks[firewall.name], new Vector2(0, 0), new Quaternion(), firewallStackUI.transform);
+				RectTransform rt = block.GetComponent<RectTransform>();
+				rt.localPosition = new Vector2(-3.8293f + n * 1.094087f, 0);
 				stackElements.Add(block);
 				n++;
 			}
+		}
+
+		for (int x = 0; x < currentNode.restrictedLayers; x++)
+		{
+			GameObject block = Instantiate(firewallBlocks["RESTRICTED"], new Vector2(0, 0), new Quaternion(), firewallStackUI.transform);
+			RectTransform rt = block.GetComponent<RectTransform>();
+			rt.localPosition = new Vector2(-3.8293f + (7 - x) * 1.094087f, 0);
+			restrictedElements.Add(block);
 		}
 	}
 
@@ -138,17 +158,33 @@ public class GameManager : MonoBehaviour
 
 		CLIENT = UnityEngine.Random.Range(0, 16);
 		SERVER = UnityEngine.Random.Range(0, 16);
+
+		timerProgressRect = timerProgressGO.GetComponent<RectTransform>();
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
 		timePassed += Time.deltaTime;
+		timerProgressRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, (10 - timePassed) / 10f * 9.021799f);
+		timerProgressRect.ForceUpdateRectTransforms();
 		if (timePassed > 10)
 		{
 			timePassed = 0;
 			CLIENT = UnityEngine.Random.Range(0, 16);
 			SERVER = UnityEngine.Random.Range(0, 16);
+
+			if (currentNode != null)
+			{
+				currentCycles++;
+
+				if (currentCycles >= restrictionCycles)
+				{
+					currentCycles = 0;
+					currentNode.restrictedLayers++;
+					RegenerateLayers();
+				}
+			}
 			// string nextKey = possibleLayers.Keys.ToArray()[UnityEngine.Random.Range(0, possibleLayers.Count)];
 			// currentNode.firewallLayers.AddLast(possibleLayers[nextKey]);
 		}
@@ -158,11 +194,15 @@ public class GameManager : MonoBehaviour
 			if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Return))
 			{
 				log.Add("user@hostname>> " + currCommand);
-				if (possibleActions.ContainsKey(currCommand) && !currentNode.cracked)
+				if (possibleActions.ContainsKey(currCommand)
+					&& currentNode != null && !currentNode.cracked)
 				{
 					FirewallBase currlayer = currentNode.firewallLayers[0];
 					Values newVals = possibleActions[currCommand].Execute(new Values(CLIENT, SERVER), ref currlayer);
-					log.Add(possibleActions[currCommand].response);
+					foreach (string resp in possibleActions[currCommand].response)
+					{
+						log.Add(resp);
+					}
 					CLIENT = newVals.CLIENT != null ? (int)newVals.CLIENT : CLIENT;
 					SERVER = newVals.SERVER != null ? (int)newVals.SERVER : SERVER;
 					if (currlayer.health.CLIENT <= 0 || currlayer.health.SERVER <= 0)
@@ -178,6 +218,13 @@ public class GameManager : MonoBehaviour
 						if (currentNode.final) Debug.Log("Win!");
 					}
 				}
+				else if (currCommand == "help" || currCommand == "?")
+				{
+					foreach (string resp in possibleActions[currCommand].response)
+					{
+						log.Add(resp);
+					}
+				}
 				currCommand = "";
 			}
 			else if (Input.GetKeyDown(KeyCode.Backspace))
@@ -190,7 +237,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		if (log.Count > 19) log.RemoveRange(0, log.Count - 19);
+		if (log.Count > 21) log.RemoveRange(0, log.Count - 21);
 		string terminal = "";
 		foreach (string line in log)
 		{
@@ -219,10 +266,21 @@ public class GameManager : MonoBehaviour
 			// }
 			// else
 			// {
+
+			if (8 - currentNode.firewallLayers.Count <= currentNode.restrictedLayers)
+			{
+				Debug.Log("LOSE!!!");
+			}
+
 			for (int x = 0; x < currentNode.firewallLayers.Count; x++)
 			{
 				if (currentNode.firewallLayers[x] == null || stackElements[x] == null) break;
 				stackElements[x].GetComponent<FirewallBlock>().health = currentNode.firewallLayers[x].GetHealth();
+			}
+
+			foreach (GameObject restricted in restrictedElements)
+			{
+				restricted.GetComponent<FirewallBlock>().health = Convert.ToString(UnityEngine.Random.Range(0, 1000));
 			}
 			// }
 		}

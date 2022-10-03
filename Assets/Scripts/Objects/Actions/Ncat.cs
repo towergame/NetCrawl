@@ -8,7 +8,7 @@ public class Ncat : ActionBase
 	{
 		name = "ncat";
 		aliases = new string[] { "ncat", "netcat" };
-		response = "CLIENT moved to SERVER.";
+		response = new string[] { "CLIENT moved to SERVER." };
 	}
 	public override Values Execute(Values input, ref FirewallBase firewall)
 	{
