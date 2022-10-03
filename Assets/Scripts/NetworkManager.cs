@@ -47,50 +47,57 @@ public class NetworkManager : MonoBehaviour
 			{
 				currentNode.GenerateLine(nodeInstance);
 				int coinFlip = Random.Range(0, 2);
+				float randomCoeff = 0;
 				if (coinFlip == 0)
 				{
 					nodeInstance.left = node;
-					float randomCoeff = Random.value;
-					GameObject randomNode = Instantiate(nodePrefab, new Vector3(Random.Range(topLeft.x, bottomRight.x), Random.Range(topLeft.y, bottomRight.y), z), new Quaternion(), nodeParent.transform);
-					nodeInstance.right = randomNode;
-					nodes.Add(randomNode);
-					randomNode.SetActive(false);
-					Node provisionalNodeInstance = randomNode.GetComponent<Node>();
-					provisionalNodeInstance.GenerateLine(nodeInstance);
-					while (randomCoeff < deviationCoeff)
+					randomCoeff = Random.value;
+					if (randomCoeff < deviationCoeff)
 					{
-						int anotherCoinFlip = Random.Range(0, 2);
-						GameObject anotherRandomNode = Instantiate(nodePrefab, new Vector3(Random.Range(topLeft.x, bottomRight.x), Random.Range(topLeft.y, bottomRight.y), z), new Quaternion(), nodeParent.transform);
-						nodes.Add(anotherRandomNode);
-						anotherRandomNode.SetActive(false);
-						if (anotherCoinFlip == 0) provisionalNodeInstance.left = anotherRandomNode;
-						else provisionalNodeInstance.right = anotherRandomNode;
-						anotherRandomNode.GetComponent<Node>().GenerateLine(provisionalNodeInstance);
-						provisionalNodeInstance = anotherRandomNode.GetComponent<Node>();
-						randomCoeff = Random.value;
+						GameObject randomNode = Instantiate(nodePrefab, new Vector3(Random.Range(topLeft.x, bottomRight.x), Random.Range(topLeft.y, bottomRight.y), z), new Quaternion(), nodeParent.transform);
+						nodeInstance.right = randomNode;
+						nodes.Add(randomNode);
+						randomNode.SetActive(false);
+						Node provisionalNodeInstance = randomNode.GetComponent<Node>();
+						provisionalNodeInstance.GenerateLine(nodeInstance);
+						while (randomCoeff < deviationCoeff)
+						{
+							int anotherCoinFlip = Random.Range(0, 2);
+							GameObject anotherRandomNode = Instantiate(nodePrefab, new Vector3(Random.Range(topLeft.x, bottomRight.x), Random.Range(topLeft.y, bottomRight.y), z), new Quaternion(), nodeParent.transform);
+							nodes.Add(anotherRandomNode);
+							anotherRandomNode.SetActive(false);
+							if (anotherCoinFlip == 0) provisionalNodeInstance.left = anotherRandomNode;
+							else provisionalNodeInstance.right = anotherRandomNode;
+							anotherRandomNode.GetComponent<Node>().GenerateLine(provisionalNodeInstance);
+							provisionalNodeInstance = anotherRandomNode.GetComponent<Node>();
+							randomCoeff = Random.value;
+						}
 					}
 				}
 				else
 				{
 					nodeInstance.right = node;
-					float randomCoeff = Random.value;
-					GameObject randomNode = Instantiate(nodePrefab, new Vector3(Random.Range(topLeft.x, bottomRight.x), Random.Range(topLeft.y, bottomRight.y), z), new Quaternion(), nodeParent.transform);
-					nodeInstance.left = randomNode;
-					nodes.Add(randomNode);
-					randomNode.SetActive(false);
-					Node provisionalNodeInstance = randomNode.GetComponent<Node>();
-					provisionalNodeInstance.GenerateLine(nodeInstance);
-					while (randomCoeff < deviationCoeff)
+					randomCoeff = Random.value;
+					if (randomCoeff < deviationCoeff)
 					{
-						int anotherCoinFlip = Random.Range(0, 2);
-						GameObject anotherRandomNode = Instantiate(nodePrefab, new Vector3(Random.Range(topLeft.x, bottomRight.x), Random.Range(topLeft.y, bottomRight.y), z), new Quaternion(), nodeParent.transform);
-						nodes.Add(anotherRandomNode);
-						anotherRandomNode.SetActive(false);
-						if (anotherCoinFlip == 0) provisionalNodeInstance.left = anotherRandomNode;
-						else provisionalNodeInstance.right = anotherRandomNode;
-						anotherRandomNode.GetComponent<Node>().GenerateLine(provisionalNodeInstance);
-						provisionalNodeInstance = anotherRandomNode.GetComponent<Node>();
-						randomCoeff = Random.value;
+						GameObject randomNode = Instantiate(nodePrefab, new Vector3(Random.Range(topLeft.x, bottomRight.x), Random.Range(topLeft.y, bottomRight.y), z), new Quaternion(), nodeParent.transform);
+						nodeInstance.left = randomNode;
+						nodes.Add(randomNode);
+						randomNode.SetActive(false);
+						Node provisionalNodeInstance = randomNode.GetComponent<Node>();
+						provisionalNodeInstance.GenerateLine(nodeInstance);
+						while (randomCoeff < deviationCoeff)
+						{
+							int anotherCoinFlip = Random.Range(0, 2);
+							GameObject anotherRandomNode = Instantiate(nodePrefab, new Vector3(Random.Range(topLeft.x, bottomRight.x), Random.Range(topLeft.y, bottomRight.y), z), new Quaternion(), nodeParent.transform);
+							nodes.Add(anotherRandomNode);
+							anotherRandomNode.SetActive(false);
+							if (anotherCoinFlip == 0) provisionalNodeInstance.left = anotherRandomNode;
+							else provisionalNodeInstance.right = anotherRandomNode;
+							anotherRandomNode.GetComponent<Node>().GenerateLine(provisionalNodeInstance);
+							provisionalNodeInstance = anotherRandomNode.GetComponent<Node>();
+							randomCoeff = Random.value;
+						}
 					}
 				}
 			}

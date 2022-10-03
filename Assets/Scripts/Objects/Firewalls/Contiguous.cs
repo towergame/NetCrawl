@@ -17,7 +17,7 @@ public class Contiguous : FirewallBase
 	{
 		if (choice == null && input.CLIENT != null) choice = "CLIENT";
 		else if (choice == null && input.SERVER != null) choice = "SERVER";
-		else return;
+		else if (choice == null) return;
 
 		if (input.SERVER != null && choice == "SERVER") health.CLIENT -= input.SERVER;
 		if (input.CLIENT != null && choice == "CLIENT") health.CLIENT -= input.CLIENT;
@@ -25,6 +25,8 @@ public class Contiguous : FirewallBase
 
 	public override string GetHealth()
 	{
+		if (choice == "CLIENT") return "<color=#00C4FF>" + Convert.ToString(health.CLIENT) + "</color>";
+		if (choice == "SERVER") return "<color=#FFA700>" + Convert.ToString(health.CLIENT) + "</color>";
 		return Convert.ToString(health.CLIENT);
 	}
 }

@@ -102,10 +102,12 @@ MonoBehaviour:
   - INBOUND
   - OUTBOUND
   - SHARED
+  - CONTIGUOUS
   layerCount: 3
   cracked: 0
   final: 0
   selected: 0
+  restrictedLayers: 0
   gameManager: {fileID: 0}
   left: {fileID: 0}
   right: {fileID: 0}
@@ -114,6 +116,7 @@ MonoBehaviour:
   selectedColour: {r: 0, g: 0.4582136, b: 0.7075472, a: 1}
   gradientTime: 0.5
   selectedCoeff: 0.5
+  lineMat: {fileID: 2100000, guid: f81e76d592b8f26fa8fe5f4ebdb8bcca, type: 2}
 --- !u!61 &7439731130814794190
 BoxCollider2D:
   m_ObjectHideFlags: 0

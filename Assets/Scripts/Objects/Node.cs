@@ -26,18 +26,21 @@ public class Node : MonoBehaviour
 	public float selectedCoeff = 0.5f;
 	private float gradientScale = 0f;
 
+	public Material lineMat;
+
 	private Color currentColour;
 
 	public void GenerateLine(Node parent)
 	{
 		LineRenderer lr = gameObject.AddComponent<LineRenderer>();
 
-		lr.SetPosition(0, gameObject.transform.position);
-		lr.SetPosition(1, parent.transform.position);
+		lr.SetPosition(0, gameObject.transform.position + new Vector3(0, 0, 5));
+		lr.SetPosition(1, parent.transform.position + new Vector3(0, 0, 5));
 		lr.startWidth = 0.05f;
 		lr.endWidth = 0.05f;
 		lr.startColor = Color.white;
 		lr.endColor = Color.white;
+		lr.material = lineMat;
 	}
 
 	public void Start()

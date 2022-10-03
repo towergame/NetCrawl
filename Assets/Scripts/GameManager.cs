@@ -6,11 +6,17 @@ using System;
 using Baracuda.Monitoring;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 [Serializable] public class FirewallDict : SerializableDictionary<string, GameObject> { }
 
 public class GameManager : MonoBehaviour
 {
+	[SerializeField]
+	public string username = "guest";
+	[SerializeField]
+	public string hostname = "ldnet";
+
 	public GameObject clientDecGo;
 	private TMP_Text clientDecText;
 	public GameObject clientBinGo;
@@ -26,6 +32,10 @@ public class GameManager : MonoBehaviour
 	private float timePassed = 0f;
 	public int restrictionCycles = 3;
 	private int currentCycles = 0;
+
+	public int pathLength = 3;
+	[Range(0, 1)]
+	public float pathBranch = 0.33f;
 
 	private string currCommand = "";
 	public List<string> initialLines = new();
@@ -50,9 +60,24 @@ public class GameManager : MonoBehaviour
 	private NetworkManager networkManager;
 	private Node currentNode = null;
 
+	public bool generateNetwork = true;
+
+	public List<string> tutorialLines = new();
+	public GameObject tutorialObject;
+	private TMP_Text tutorialText;
+	private int currentTutorialIndex = 0;
+
+	public int maxLines = 15;
+
+	public AudioManager audioManager;
+
 	public void SelectNode(Node node)
 	{
 		if (currentNode != null) currentNode.selected = false;
+		if (currentNode == null)
+		{ // yes, this is hacky
+			currentTutorialIndex++;
+		}
 		currentNode = node;
 		currentNode.selected = true;
 		RegenerateLayers();
@@ -140,7 +165,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		networkManager = gameObject.GetComponent<NetworkManager>();
-		networkManager.GenerateNetwork(3, 0.33f);
+		if (generateNetwork) networkManager.GenerateNetwork(pathLength, pathBranch);
 		// SelectNode(networkManager.nodes.First().GetComponent<Node>());
 
 		foreach (string line in initialLines)
@@ -160,6 +185,8 @@ public class GameManager : MonoBehaviour
 		SERVER = UnityEngine.Random.Range(0, 16);
 
 		timerProgressRect = timerProgressGO.GetComponent<RectTransform>();
+
+		if (tutorialObject != null) tutorialText = tutorialObject.GetComponent<TMP_Text>();
 	}
 
 	// Update is called once per frame
@@ -182,6 +209,7 @@ public class GameManager : MonoBehaviour
 				{
 					currentCycles = 0;
 					currentNode.restrictedLayers++;
+					audioManager.Beep();
 					RegenerateLayers();
 				}
 			}
@@ -193,7 +221,7 @@ public class GameManager : MonoBehaviour
 		{
 			if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Return))
 			{
-				log.Add("user@hostname>> " + currCommand);
+				log.Add(username + "@" + hostname + ">> " + currCommand);
 				if (possibleActions.ContainsKey(currCommand)
 					&& currentNode != null && !currentNode.cracked)
 				{
@@ -215,7 +243,8 @@ public class GameManager : MonoBehaviour
 						if (currentNode.left != null) currentNode.left?.SetActive(true);
 						if (currentNode.right != null) currentNode.right?.SetActive(true);
 						currentNode.cracked = true;
-						if (currentNode.final) Debug.Log("Win!");
+						currentTutorialIndex++;
+						if (currentNode.final) SceneManager.LoadScene("Win"); ;
 					}
 				}
 				else if (currCommand == "help" || currCommand == "?")
@@ -237,13 +266,13 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		if (log.Count > 21) log.RemoveRange(0, log.Count - 21);
+		if (log.Count > maxLines) log.RemoveRange(0, log.Count - maxLines);
 		string terminal = "";
 		foreach (string line in log)
 		{
 			terminal += line + "\n";
 		}
-		terminal += "user@hostname>> " + currCommand;
+		terminal += username + "@" + hostname + ">> " + currCommand;
 		terminalObj.text = terminal;
 
 		clientDecText.text = Convert.ToString(CLIENT);
@@ -269,7 +298,7 @@ public class GameManager : MonoBehaviour
 
 			if (8 - currentNode.firewallLayers.Count <= currentNode.restrictedLayers)
 			{
-				Debug.Log("LOSE!!!");
+				SceneManager.LoadScene("Lose");
 			}
 
 			for (int x = 0; x < currentNode.firewallLayers.Count; x++)
@@ -283,6 +312,11 @@ public class GameManager : MonoBehaviour
 				restricted.GetComponent<FirewallBlock>().health = Convert.ToString(UnityEngine.Random.Range(0, 1000));
 			}
 			// }
+		}
+
+		if (tutorialText != null)
+		{
+			tutorialText.text = tutorialLines[(int)Mathf.Min(currentTutorialIndex, tutorialLines.Count - 1)].Replace("\\n", "\n");
 		}
 	}
 

@@ -5,7 +5,7 @@
 //---------- ----------------------------- ----------
 
 //Runtime Monitoring
-//File generated: 2022-08-20 20:37:16Z
+//File generated: 2022-10-04 01:01:20Z
 //Please dont change the contents of this file. Otherwise IL2CPP runtime may not work with runtime monitoring!
 //Ensure that this file is located in Assembly-CSharp. Otherwise this file may not compile.
 //If this file contains any errors please contact me and/or create an issue in the linked repository.
@@ -17,65 +17,61 @@ internal class IL2CPP_AOT
 {
     //Field Profiles
     
-    //FieldProfile<TempTest, List<ValueTuple<Type, Vector3>>>
-    [UnityEngine.Scripting.PreserveAttribute]
-    Baracuda.Monitoring.Source.Profiles.FieldProfile<TempTest, System.Collections.Generic.List<System.ValueTuple<System.Type, UnityEngine.Vector3>>> AOT_GENERATED_TYPE_0;
-    
-    //FieldProfile<GameManager, int>
-    [UnityEngine.Scripting.PreserveAttribute]
-    Baracuda.Monitoring.Source.Profiles.FieldProfile<Baracuda.Monitoring.Example.Scripts.GameManager, System.Int32> AOT_GENERATED_TYPE_1;
-    
-    //FieldProfile<PlayerMovement, bool>
-    [UnityEngine.Scripting.PreserveAttribute]
-    Baracuda.Monitoring.Source.Profiles.FieldProfile<Baracuda.Monitoring.Example.Scripts.PlayerMovement, System.Boolean> AOT_GENERATED_TYPE_4;
-    
-    //FieldProfile<PlayerMovement, int>
-    [UnityEngine.Scripting.PreserveAttribute]
-    Baracuda.Monitoring.Source.Profiles.FieldProfile<Baracuda.Monitoring.Example.Scripts.PlayerMovement, System.Int32> AOT_GENERATED_TYPE_5;
-    
-    //FieldProfile<PlayerMovement, float>
-    [UnityEngine.Scripting.PreserveAttribute]
-    Baracuda.Monitoring.Source.Profiles.FieldProfile<Baracuda.Monitoring.Example.Scripts.PlayerMovement, System.Single> AOT_GENERATED_TYPE_6;
-    
-    //FieldProfile<PlayerWeapon, int>
-    [UnityEngine.Scripting.PreserveAttribute]
-    Baracuda.Monitoring.Source.Profiles.FieldProfile<Baracuda.Monitoring.Example.Scripts.PlayerWeapon, System.Int32> AOT_GENERATED_TYPE_8;
-    
-    //FieldProfile<ShootingTarget, float>
-    [UnityEngine.Scripting.PreserveAttribute]
-    Baracuda.Monitoring.Source.Profiles.FieldProfile<Baracuda.Monitoring.Example.Scripts.ShootingTarget, System.Single> AOT_GENERATED_TYPE_9;
-    
     //FieldProfile<FPSMonitor, float>
     [UnityEngine.Scripting.PreserveAttribute]
-    Baracuda.Monitoring.Source.Profiles.FieldProfile<Baracuda.Monitoring.Modules.FPSMonitor, System.Single> AOT_GENERATED_TYPE_12;
+    Baracuda.Monitoring.Source.Profiles.FieldProfile<Baracuda.Monitoring.Modules.FPSMonitor, System.Single> AOT_GENERATED_TYPE_2;
     
     //FieldProfile<SystemMonitor, string>
     [UnityEngine.Scripting.PreserveAttribute]
-    Baracuda.Monitoring.Source.Profiles.FieldProfile<Baracuda.Monitoring.Modules.SystemMonitor, System.String> AOT_GENERATED_TYPE_14;
+    Baracuda.Monitoring.Source.Profiles.FieldProfile<Baracuda.Monitoring.Modules.SystemMonitor, System.String> AOT_GENERATED_TYPE_4;
+    
+    //FieldProfile<GameManager, int>
+    [UnityEngine.Scripting.PreserveAttribute]
+    Baracuda.Monitoring.Source.Profiles.FieldProfile<Baracuda.Monitoring.Example.Scripts.GameManager, System.Int32> AOT_GENERATED_TYPE_5;
+    
+    //FieldProfile<PlayerMovement, bool>
+    [UnityEngine.Scripting.PreserveAttribute]
+    Baracuda.Monitoring.Source.Profiles.FieldProfile<Baracuda.Monitoring.Example.Scripts.PlayerMovement, System.Boolean> AOT_GENERATED_TYPE_8;
+    
+    //FieldProfile<PlayerMovement, int>
+    [UnityEngine.Scripting.PreserveAttribute]
+    Baracuda.Monitoring.Source.Profiles.FieldProfile<Baracuda.Monitoring.Example.Scripts.PlayerMovement, System.Int32> AOT_GENERATED_TYPE_9;
+    
+    //FieldProfile<PlayerMovement, float>
+    [UnityEngine.Scripting.PreserveAttribute]
+    Baracuda.Monitoring.Source.Profiles.FieldProfile<Baracuda.Monitoring.Example.Scripts.PlayerMovement, System.Single> AOT_GENERATED_TYPE_10;
+    
+    //FieldProfile<PlayerWeapon, int>
+    [UnityEngine.Scripting.PreserveAttribute]
+    Baracuda.Monitoring.Source.Profiles.FieldProfile<Baracuda.Monitoring.Example.Scripts.PlayerWeapon, System.Int32> AOT_GENERATED_TYPE_12;
+    
+    //FieldProfile<ShootingTarget, float>
+    [UnityEngine.Scripting.PreserveAttribute]
+    Baracuda.Monitoring.Source.Profiles.FieldProfile<Baracuda.Monitoring.Example.Scripts.ShootingTarget, System.Single> AOT_GENERATED_TYPE_13;
 
     //------------------------------------------------------------------------------------------------------------------
 
     //Property Profiles
     
-    //PropertyProfile<GameManager, GameState>
-    [UnityEngine.Scripting.PreserveAttribute]
-    Baracuda.Monitoring.Source.Profiles.PropertyProfile<Baracuda.Monitoring.Example.Scripts.GameManager, Baracuda.Monitoring.Example.Scripts.GameState> AOT_GENERATED_TYPE_2;
-    
-    //PropertyProfile<PlayerMovement, Vector3>
-    [UnityEngine.Scripting.PreserveAttribute]
-    Baracuda.Monitoring.Source.Profiles.PropertyProfile<Baracuda.Monitoring.Example.Scripts.PlayerMovement, UnityEngine.Vector3> AOT_GENERATED_TYPE_7;
-    
     //PropertyProfile<ConsoleMonitor, Queue<string>>
     [UnityEngine.Scripting.PreserveAttribute]
-    Baracuda.Monitoring.Source.Profiles.PropertyProfile<Baracuda.Monitoring.Modules.ConsoleMonitor, System.Collections.Generic.Queue<System.String>> AOT_GENERATED_TYPE_10;
+    Baracuda.Monitoring.Source.Profiles.PropertyProfile<Baracuda.Monitoring.Modules.ConsoleMonitor, System.Collections.Generic.Queue<System.String>> AOT_GENERATED_TYPE_0;
     
     //PropertyProfile<ConsoleMonitor, string>
     [UnityEngine.Scripting.PreserveAttribute]
-    Baracuda.Monitoring.Source.Profiles.PropertyProfile<Baracuda.Monitoring.Modules.ConsoleMonitor, System.String> AOT_GENERATED_TYPE_11;
+    Baracuda.Monitoring.Source.Profiles.PropertyProfile<Baracuda.Monitoring.Modules.ConsoleMonitor, System.String> AOT_GENERATED_TYPE_1;
     
     //PropertyProfile<FPSMonitor, int>
     [UnityEngine.Scripting.PreserveAttribute]
-    Baracuda.Monitoring.Source.Profiles.PropertyProfile<Baracuda.Monitoring.Modules.FPSMonitor, System.Int32> AOT_GENERATED_TYPE_13;
+    Baracuda.Monitoring.Source.Profiles.PropertyProfile<Baracuda.Monitoring.Modules.FPSMonitor, System.Int32> AOT_GENERATED_TYPE_3;
+    
+    //PropertyProfile<GameManager, GameState>
+    [UnityEngine.Scripting.PreserveAttribute]
+    Baracuda.Monitoring.Source.Profiles.PropertyProfile<Baracuda.Monitoring.Example.Scripts.GameManager, Baracuda.Monitoring.Example.Scripts.GameState> AOT_GENERATED_TYPE_6;
+    
+    //PropertyProfile<PlayerMovement, Vector3>
+    [UnityEngine.Scripting.PreserveAttribute]
+    Baracuda.Monitoring.Source.Profiles.PropertyProfile<Baracuda.Monitoring.Example.Scripts.PlayerMovement, UnityEngine.Vector3> AOT_GENERATED_TYPE_11;
 
     //------------------------------------------------------------------------------------------------------------------
 
@@ -83,7 +79,7 @@ internal class IL2CPP_AOT
     
     //EventProfile<GameManager, Action<GameState>>
     [UnityEngine.Scripting.PreserveAttribute]
-    Baracuda.Monitoring.Source.Profiles.EventProfile<Baracuda.Monitoring.Example.Scripts.GameManager, System.Action<Baracuda.Monitoring.Example.Scripts.GameState>> AOT_GENERATED_TYPE_3;
+    Baracuda.Monitoring.Source.Profiles.EventProfile<Baracuda.Monitoring.Example.Scripts.GameManager, System.Action<Baracuda.Monitoring.Example.Scripts.GameState>> AOT_GENERATED_TYPE_7;
 
     //------------------------------------------------------------------------------------------------------------------
 
@@ -97,8 +93,6 @@ internal class IL2CPP_AOT
     [System.Runtime.CompilerServices.MethodImplAttribute(System.Runtime.CompilerServices.MethodImplOptions.NoOptimization)]
     private static void AOT()
     {
-        Baracuda.Monitoring.IL2CPP.AOTBridge.AOTEnumerable<System.ValueTuple<System.Type, UnityEngine.Vector3>>();
-        Baracuda.Monitoring.IL2CPP.AOTBridge.AOTList<System.Collections.Generic.List<System.ValueTuple<System.Type, UnityEngine.Vector3>>, System.ValueTuple<System.Type, UnityEngine.Vector3>>();
         Baracuda.Monitoring.IL2CPP.AOTBridge.AOTEnumerable<System.String>();
     }
 }
@@ -111,31 +105,28 @@ internal class IL2CPP_AOT
 
 //General
 
-//Monitored Member:                           39
-//Monitored Member Instance:                  38
-//Monitored Member Static:                     1
+//Monitored Member:               38
+//Monitored Member Instance:      38
 
 //MemberInfo
 
-//Monitored Events:                            1
-//Monitored Events Instance:                   1
-//Monitored Fields:                           31
-//Monitored Fields Instance:                  30
-//Monitored Fields Static:                     1
-//Monitored Properties:                        7
-//Monitored Properties Instance:               7
+//Monitored Events:                1
+//Monitored Events Instance:       1
+//Monitored Fields:               30
+//Monitored Fields Instance:      30
+//Monitored Properties:            7
+//Monitored Properties Instance:   7
 
 //Monitored Types
 
-//Monitored Action<GameState>:                 1
-//Monitored bool:                              3
-//Monitored float:                             4
-//Monitored GameState:                         1
-//Monitored int:                               5
-//Monitored List<ValueTuple<Type, Vector3>>:   1
-//Monitored Queue<string>:                     1
-//Monitored string:                           21
-//Monitored Vector3:                           1
+//Monitored Action<GameState>:     1
+//Monitored bool:                  3
+//Monitored float:                 4
+//Monitored GameState:             1
+//Monitored int:                   5
+//Monitored Queue<string>:         1
+//Monitored string:               21
+//Monitored Vector3:               1
 
 //----------------------------------------------------------------------------------------------------------------------
 
